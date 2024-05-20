@@ -48,7 +48,7 @@ function AdminHomePage() {
     } catch (error) {
       console.error('Error adding dish:', error);
       toast.error('Failed to add dish');
-    }
+    } 
   };
 
   const handleDeleteDish = async (id) => {
@@ -61,7 +61,7 @@ function AdminHomePage() {
         throw new Error('Failed to delete dish');
       }
 
-      setDishes(dishes.filter((dish) => dish.id !== id));
+      setDishes(dishes?.filter((dish) => dish.id !== id));
       toast.info('Dish deleted successfully');
     } catch (error) {
       console.error('Error deleting dish:', error);
@@ -99,7 +99,7 @@ function AdminHomePage() {
       </form>
       <h2>All Dishes</h2>
       <ul>
-        {dishes.map((dish) => (
+        {dishes?.map((dish) => (
           <li key={dish.id}>
             <span>{dish.name}</span>
             <span className="price">${dish.price}</span>

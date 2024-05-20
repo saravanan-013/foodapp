@@ -41,7 +41,7 @@ function UserHomePage() {
       <div className="dishes-list">
         <h3>Dishes</h3>
         <ul>
-          {dishes.map((dish) => (
+          {dishes?.map((dish) => (
             <li key={dish.id}>
               <span>{dish.name}</span>
               <span>${parseFloat(dish.price).toFixed(2)}</span>
