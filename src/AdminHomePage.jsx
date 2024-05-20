@@ -13,7 +13,7 @@ function AdminHomePage() {
 
   const fetchDishes = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/dishes');
+      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes');
       const data = await response.json();
       setDishes(data);
     } catch (error) {
@@ -26,7 +26,7 @@ function AdminHomePage() {
     const dishData = { name, price };
 
     try {
-      const response = await fetch('http://localhost:3001/api/dishes', {
+      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function AdminHomePage() {
 
   const handleDeleteDish = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/dishes/${id}`, {
+      const response = await fetch(`https://foodapp-bcc0.onrender.com/api/dishes/${id}`, {
         method: 'DELETE',
       });
 
