@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+
 function AdminHomePage() {
   const [dishes, setDishes] = useState([]);
   const [name, setName] = useState('');
@@ -48,7 +49,7 @@ function AdminHomePage() {
     } catch (error) {
       console.error('Error adding dish:', error);
       toast.error('Failed to add dish');
-    } 
+    }
   };
 
   const handleDeleteDish = async (id) => {
@@ -61,7 +62,7 @@ function AdminHomePage() {
         throw new Error('Failed to delete dish');
       }
 
-      setDishes(dishes?.filter((dish) => dish.id !== id));
+      setDishes(dishes.filter((dish) => dish.id !== id));
       toast.info('Dish deleted successfully');
     } catch (error) {
       console.error('Error deleting dish:', error);
@@ -95,15 +96,15 @@ function AdminHomePage() {
             />
           </label>
         </div>
-        <button type="submit">Add Dish</button>
+        <button type="submit" className="btn submit-btn">Add Dish</button>
       </form>
       <h2>All Dishes</h2>
       <ul>
-        {dishes?.map((dish) => (
+        {dishes.map((dish) => (
           <li key={dish.id}>
             <span>{dish.name}</span>
             <span className="price">${dish.price}</span>
-            <button onClick={() => handleDeleteDish(dish.id)}>Delete</button>
+            <button onClick={() => handleDeleteDish(dish.id)} className="btn delete-btn">Delete</button>
           </li>
         ))}
       </ul>

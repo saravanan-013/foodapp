@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
+
 function ShoppingCart({ cartItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,7 +17,7 @@ function ShoppingCart({ cartItems }) {
   const handlePlaceOrder = async () => {
     try {
       // Send cart details to the backend
-      const response = await fetch('http://localhost:3001/api/placeOrder', {
+      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

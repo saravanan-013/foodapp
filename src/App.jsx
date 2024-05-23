@@ -21,19 +21,30 @@ function App() {
     <Router>
       <div className="App">
         <ToastContainer />
+        <header className="App-header">
+          <h1>College Canteen</h1>
+          <nav>
+ 
+          </nav>
+        </header>
         <Routes>
           <Route path="/" element={
-            <div className="button-container">
-              <Link to="/admin">
-                <button className="btn admin-btn">Admin</button>
-              </Link>
-              <Link to="/user-authentication">
-                <button className="btn user-btn">User</button>
-              </Link>
-              {/* Link to ShoppingCartPage */}
-              {/* <Link to="/cart">
-                <button className="btn cart-btn">Cart</button>
-              </Link> */}
+            <div className="home-container">
+              <h2>Welcome to College Canteen Food Ordering</h2>
+              <p>Order delicious meals from the comfort of your dorm!</p>
+              <p>Whether you're craving something spicy, sweet, or savory, we've got you covered. Enjoy your favorite dishes with just a few clicks!</p>
+              <div className="button-container">
+                <Link to="/admin">
+                  <button className="btn admin-btn">Admin</button>
+                </Link>
+                <Link to="/user-authentication">
+                  <button className="btn user-btn">User</button>
+                </Link>
+                {/* Link to ShoppingCartPage */}
+                {/* <Link to="/cart">
+                  <button className="btn cart-btn">Cart</button>
+                </Link> */}
+              </div>
             </div>
           } />
           <Route path="/admin" element={<Admin />} />
@@ -45,6 +56,9 @@ function App() {
           <Route path="/admin-home" element={<AdminHomePage setDishes={setDishes} />} />
           <Route path="/user-home" element={<UserHomePage dishes={dishes} />} />
         </Routes>
+        <footer className="App-footer">
+          <p>&copy; 2024 College Canteen. All rights reserved.</p>
+        </footer>
       </div>
     </Router>
   );
