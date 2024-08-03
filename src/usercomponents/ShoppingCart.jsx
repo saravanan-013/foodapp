@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-
 function ShoppingCart({ cartItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,26 +14,40 @@ function ShoppingCart({ cartItems }) {
   }, 0);
 
   const handlePlaceOrder = async () => {
+    const mobileNumber = prompt('Please enter your mobile number:');
+    if (!mobileNumber) {
+      toast.error('Mobile number is required!');
+      return;
+    }
+
+    const token = localStorage.getItem('token'); // Assume the token is stored in localStorage
+
+    if (!token) {
+      toast.error('You must be logged in to place an order.');
+      return;
+    }
+
     try {
-      // Send cart details to the backend
-      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes', {
+      const response = await fetch('http://localhost:3001/api/placeOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ cartItems }),
+        body: JSON.stringify({ cartItems, mobileNumber }),
       });
 
       if (response.ok) {
-        // If the response is successful, show a toast notification
         toast.success('Order placed successfully!');
         console.log('Order placed successfully!');
       } else {
-        // If there's an error in the response, handle it accordingly
+        const errorData = await response.json();
+        toast.error(`Failed to place order: ${errorData.error}`);
         console.error('Failed to place order:', response.statusText);
       }
     } catch (error) {
       console.error('Error placing order:', error);
+      toast.error('Error placing order!');
     }
   };
 

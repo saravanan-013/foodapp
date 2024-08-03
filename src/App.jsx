@@ -3,14 +3,11 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Admin from './Admin';
-import Register from './Register';
-import Signin from './Signin';
-import UserAuthentication from './UserAuthentication';
-import Signup from './Signup';
-import UserSignin from './UserSignin';
-import AdminHomePage from './AdminHomePage';
-import UserHomePage from './UserHomePage';
+import Admin from './admincomponents/Admin';
+import Register from './admincomponents/Register';
+import Signin from './admincomponents/Signin';
+import AdminHomePage from './admincomponents/AdminHomePage';
+import UserHomePage from './usercomponents/UserHomePage';
 import './App.css';
 
 function App() {
@@ -24,7 +21,7 @@ function App() {
         <header className="App-header">
           <h1>College Canteen</h1>
           <nav>
- 
+            {/* Navigation links */}
           </nav>
         </header>
         <Routes>
@@ -37,7 +34,7 @@ function App() {
                 <Link to="/admin">
                   <button className="btn admin-btn">Admin</button>
                 </Link>
-                <Link to="/user-authentication">
+                <Link to="/user-home">
                   <button className="btn user-btn">User</button>
                 </Link>
                 {/* Link to ShoppingCartPage */}
@@ -50,9 +47,6 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/user-authentication" element={<UserAuthentication />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/user-signin" element={<UserSignin />} />
           <Route path="/admin-home" element={<AdminHomePage setDishes={setDishes} />} />
           <Route path="/user-home" element={<UserHomePage dishes={dishes} />} />
         </Routes>

@@ -1,7 +1,5 @@
-// src/Signin.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 
 function Signin() {
   const [formData, setFormData] = useState({
@@ -15,15 +13,28 @@ function Signin() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = formData;
 
-    // Admin authentication logic 
-    if (username === 'saran' && password === '12345') {
+    try {
+      const response = await fetch('http://localhost:3001/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+
+      const { token } = await response.json();
+      localStorage.setItem('token', token);
       navigate('/admin-home');
-    } else {
-      alert('Invalid username or password');
+    } catch (error) {
+      alert(error.message);
     }
   };
 

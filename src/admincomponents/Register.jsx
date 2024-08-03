@@ -1,6 +1,4 @@
-// src/Register.jsx
 import React, { useState } from 'react';
-
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -16,10 +14,25 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission logic here
+    try {
+      const response = await fetch('http://localhost:3001/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      alert('Registration successful!');
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -27,7 +40,7 @@ function Register() {
       <div className="register-container">
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className="register-form">
-          <label>
+        <label>
             Username:
             <input
               type="text"

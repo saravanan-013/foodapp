@@ -1,7 +1,5 @@
-// src/AdminHomePage.jsx
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-
 
 function AdminHomePage() {
   const [dishes, setDishes] = useState([]);
@@ -13,8 +11,13 @@ function AdminHomePage() {
   }, []);
 
   const fetchDishes = async () => {
+    const token = localStorage.getItem('token');
     try {
-      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes');
+      const response = await fetch('http://localhost:3001/api/dishes', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
       setDishes(data);
     } catch (error) {
@@ -25,12 +28,14 @@ function AdminHomePage() {
   const handleAddDish = async (e) => {
     e.preventDefault();
     const dishData = { name, price };
+    const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes', {
+      const response = await fetch('http://localhost:3001/api/dishes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(dishData),
       });
@@ -44,8 +49,8 @@ function AdminHomePage() {
       setName('');
       setPrice('');
 
-      // Show success toast
       toast.success('Food item added successfully!');
+      fetchDishes(); // Fetch the updated list of dishes
     } catch (error) {
       console.error('Error adding dish:', error);
       toast.error('Failed to add dish');
@@ -53,9 +58,14 @@ function AdminHomePage() {
   };
 
   const handleDeleteDish = async (id) => {
+    const token = localStorage.getItem('token');
+
     try {
-      const response = await fetch(`https://foodapp-bcc0.onrender.com/api/dishes/${id}`, {
+      const response = await fetch(`http://localhost:3001/api/dishes/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -64,6 +74,7 @@ function AdminHomePage() {
 
       setDishes(dishes.filter((dish) => dish.id !== id));
       toast.info('Dish deleted successfully');
+      fetchDishes(); // Fetch the updated list of dishes
     } catch (error) {
       console.error('Error deleting dish:', error);
       toast.error('Failed to delete dish');

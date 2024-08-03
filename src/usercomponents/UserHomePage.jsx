@@ -3,7 +3,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ShoppingCart from './ShoppingCart';
 
-
 function UserHomePage() {
   const [dishes, setDishes] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -14,7 +13,7 @@ function UserHomePage() {
 
   const fetchDishes = async () => {
     try {
-      const response = await fetch('https://foodapp-bcc0.onrender.com/api/dishes');
+      const response = await fetch('http://localhost:3001/api/dishes');
       const data = await response.json();
       setDishes(data);
     } catch (error) {
