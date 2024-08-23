@@ -38,6 +38,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+
 // Signin Endpoint
 app.post('/api/signin', async (req, res) => {
   try {
@@ -57,6 +58,8 @@ app.post('/api/signin', async (req, res) => {
   }
 });
 
+
+
 // Middleware to verify JWT
 const authenticateJWT = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
@@ -68,6 +71,8 @@ const authenticateJWT = (req, res, next) => {
     next();
   });
 };
+
+
 
 // Protected endpoint to add a new dish
 app.post('/api/dishes', authenticateJWT, async (req, res) => {
@@ -84,6 +89,8 @@ app.post('/api/dishes', authenticateJWT, async (req, res) => {
   }
 });
 
+
+
 // Endpoint to get all dishes (no authentication required for user home page)
 app.get('/api/dishes', async (req, res) => {
   try {
@@ -94,6 +101,8 @@ app.get('/api/dishes', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
 
 // Endpoint to delete a dish
 app.delete('/api/dishes/:id', authenticateJWT, async (req, res) => {
@@ -107,6 +116,8 @@ app.delete('/api/dishes/:id', authenticateJWT, async (req, res) => {
   }
 });
 
+
+
 // Endpoint to place an order (store cart details in the database)
 app.post('/api/placeOrder', authenticateJWT, async (req, res) => {
   try {
@@ -115,6 +126,8 @@ app.post('/api/placeOrder', authenticateJWT, async (req, res) => {
       return res.status(400).json({ error: 'Mobile number is required' });
     }
 
+
+    
     // Insert the order details along with the mobile number
     const orderPromises = cartItems.map(item => 
       pool.query(

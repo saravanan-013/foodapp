@@ -20,9 +20,7 @@ function App() {
         <ToastContainer />
         <header className="App-header">
           <h1>College Canteen</h1>
-          <nav>
-            {/* Navigation links */}
-          </nav>
+
         </header>
         <Routes>
           <Route path="/" element={
@@ -37,10 +35,6 @@ function App() {
                 <Link to="/user-home">
                   <button className="btn user-btn">User</button>
                 </Link>
-                {/* Link to ShoppingCartPage */}
-                {/* <Link to="/cart">
-                  <button className="btn cart-btn">Cart</button>
-                </Link> */}
               </div>
             </div>
           } />

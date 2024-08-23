@@ -43,7 +43,7 @@ function UserHomePage() {
           {dishes.map((dish) => (
             <li key={dish.id}>
               <span>{dish.name}</span>
-              <span>${parseFloat(dish.price).toFixed(2)}</span>
+              <span>₹{parseFloat(dish.price).toFixed(2)}</span>
               <button onClick={() => handleAddToCart(dish)}>Add to Cart</button>
             </li>
           ))}

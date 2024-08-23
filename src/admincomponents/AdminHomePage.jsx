@@ -114,7 +114,7 @@ function AdminHomePage() {
         {dishes.map((dish) => (
           <li key={dish.id}>
             <span>{dish.name}</span>
-            <span className="price">${dish.price}</span>
+            <span className="price">₹{dish.price}</span>
             <button onClick={() => handleDeleteDish(dish.id)} className="btn delete-btn">Delete</button>
           </li>
         ))}
