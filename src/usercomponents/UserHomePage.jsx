@@ -25,7 +25,7 @@ function UserHomePage() {
     setCartItems([...cartItems, dish]);
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     // Place order logic goes here
     console.log('Placing order:', cartItems);
     setCartItems([]);
@@ -36,7 +36,7 @@ function UserHomePage() {
 
   return (
     <div className="user-home-page">
-      <ShoppingCart cartItems={cartItems} handlePlaceOrder={handlePlaceOrder} />
+      <ShoppingCart cartItems={cartItems} setCartItems={setCartItems} handlePlaceOrder={handlePlaceOrder} />
       <div className="dishes-list">
         <h3>Dishes</h3>
         <ul>

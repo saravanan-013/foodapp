@@ -74,8 +74,8 @@ const authenticateJWT = (req, res, next) => {
 
 
 
-// Protected endpoint to add a new dish
-app.post('/api/dishes', authenticateJWT, async (req, res) => {
+// Endpoint to add a new dish without authentication
+app.post('/api/dishes', async (req, res) => {
   try {
     const { name, price } = req.body;
     const newDish = await pool.query(
@@ -88,6 +88,7 @@ app.post('/api/dishes', authenticateJWT, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 
@@ -104,8 +105,8 @@ app.get('/api/dishes', async (req, res) => {
 
 
 
-// Endpoint to delete a dish
-app.delete('/api/dishes/:id', authenticateJWT, async (req, res) => {
+// Endpoint to delete a dish without authentication
+app.delete('/api/dishes/:id', async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query('DELETE FROM dishes WHERE id = $1', [id]);
@@ -118,16 +119,14 @@ app.delete('/api/dishes/:id', authenticateJWT, async (req, res) => {
 
 
 
-// Endpoint to place an order (store cart details in the database)
-app.post('/api/placeOrder', authenticateJWT, async (req, res) => {
+// Endpoint to place an order without authentication
+app.post('/api/placeOrder', async (req, res) => {
   try {
     const { cartItems, mobileNumber } = req.body;
     if (!mobileNumber) {
       return res.status(400).json({ error: 'Mobile number is required' });
     }
 
-
-    
     // Insert the order details along with the mobile number
     const orderPromises = cartItems.map(item => 
       pool.query(
@@ -144,6 +143,7 @@ app.post('/api/placeOrder', authenticateJWT, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

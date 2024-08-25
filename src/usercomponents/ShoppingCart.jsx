@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-function ShoppingCart({ cartItems }) {
+function ShoppingCart({ cartItems, setCartItems, handlePlaceOrder }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCart = () => {
@@ -13,17 +13,15 @@ function ShoppingCart({ cartItems }) {
     return isNaN(price) ? total : total + price;
   }, 0);
 
-  const handlePlaceOrder = async () => {
+  const handleRemoveItem = (index) => {
+    const updatedItems = cartItems.filter((_, i) => i !== index);
+    setCartItems(updatedItems);
+  };
+
+  const handlePlaceOrderClick = async () => {
     const mobileNumber = prompt('Please enter your mobile number:');
     if (!mobileNumber) {
       toast.error('Mobile number is required!');
-      return;
-    }
-
-    const token = localStorage.getItem('token'); // Assume the token is stored in localStorage
-
-    if (!token) {
-      toast.error('You must be logged in to place an order.');
       return;
     }
 
@@ -32,7 +30,6 @@ function ShoppingCart({ cartItems }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ cartItems, mobileNumber }),
       });
@@ -40,6 +37,8 @@ function ShoppingCart({ cartItems }) {
       if (response.ok) {
         toast.success('Order placed successfully!');
         console.log('Order placed successfully!');
+        setCartItems([]); // Clear the cart after successful order
+        setIsOpen(false); // Close the cart popup after successful order
       } else {
         const errorData = await response.json();
         toast.error(`Failed to place order: ${errorData.error}`);
@@ -60,13 +59,14 @@ function ShoppingCart({ cartItems }) {
           <ul>
             {cartItems.map((item, index) => (
               <li key={index}>
-                {item.name} - ${item.price ? parseFloat(item.price).toFixed(2) : 'N/A'}
+                {item.name} - ₹{item.price ? parseFloat(item.price).toFixed(2) : 'N/A'}
+                <button onClick={() => handleRemoveItem(index)}>Delete</button>
               </li>
             ))}
           </ul>
           <div className="total">
-            <span>Total: ${totalPrice.toFixed(2)}</span>
-            <button onClick={handlePlaceOrder}>Place Order</button>
+            <span>Total: ₹{totalPrice.toFixed(2)}</span>
+            <button onClick={handlePlaceOrderClick}>Place Order</button>
           </div>
         </div>
       )}

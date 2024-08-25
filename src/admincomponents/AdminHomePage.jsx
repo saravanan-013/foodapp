@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 function AdminHomePage() {
@@ -28,14 +28,12 @@ function AdminHomePage() {
   const handleAddDish = async (e) => {
     e.preventDefault();
     const dishData = { name, price };
-    const token = localStorage.getItem('token');
 
     try {
       const response = await fetch('http://localhost:3001/api/dishes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(dishData),
       });
@@ -57,15 +55,11 @@ function AdminHomePage() {
     }
   };
 
-  const handleDeleteDish = async (id) => {
-    const token = localStorage.getItem('token');
 
+  const handleDeleteDish = async (id) => {
     try {
       const response = await fetch(`http://localhost:3001/api/dishes/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
       });
 
       if (!response.ok) {
@@ -80,6 +74,7 @@ function AdminHomePage() {
       toast.error('Failed to delete dish');
     }
   };
+
 
   return (
     <div className="container">
